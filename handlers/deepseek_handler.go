@@ -18,7 +18,7 @@ func DeepSeekHandler(w http.ResponseWriter, r *http.Request, cfg *config.Config)
 		http.Error(w, fmt.Sprintf("Error decoding user request: %v", err), http.StatusBadRequest)
 		return
 	}
-
+	fmt.Println("API Response:", userReq)
 	// 调用 DeepSeek 服务
 	deepseekResp, err := services.CallDeepSeekAPI(userReq.Prompt, cfg)
 	if err != nil {

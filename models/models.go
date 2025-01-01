@@ -5,7 +5,7 @@ type UserRequest struct {
 	Prompt string `json:"prompt"` // 用户输入的文本
 }
 
-// 用户请求的结构体
+// 返回的结构体
 type UserResp struct {
 	Code    int    `json:"code:"`   // 状态码 200 、400
 	Content string `json:"content"` // 回复内容
