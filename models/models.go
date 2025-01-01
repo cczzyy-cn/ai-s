@@ -7,8 +7,8 @@ type UserRequest struct {
 
 // 返回的结构体
 type UserResp struct {
-	Code    int    `json:"code:"`   // 状态码 200 、400
-	Content string `json:"content"` // 回复内容
+	Code    int         `json:"code:"`   // 状态码 200 、400
+	Content interface{} `json:"content"` // 回复内容
 }
 
 // DeepSeek API 请求的结构体

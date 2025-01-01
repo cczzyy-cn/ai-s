@@ -32,7 +32,7 @@ func DeepSeekHandler(w http.ResponseWriter, r *http.Request, cfg *config.Config)
 	}
 	resp = models.UserResp{
 		Code:    200,
-		Content: deepseekResp.Choices[0].Message.Content,
+		Content: deepseekResp,
 	}
 	// 返回响应给用户
 	w.Header().Set("Content-Type", "application/json")
