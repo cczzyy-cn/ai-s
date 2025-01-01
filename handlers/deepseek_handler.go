@@ -28,5 +28,5 @@ func DeepSeekHandler(w http.ResponseWriter, r *http.Request, cfg *config.Config)
 	// 返回响应给用户
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(deepseekResp)
+	json.NewEncoder(w).Encode(deepseekResp.Choices[0].Message.Content)
 }
