@@ -11,6 +11,7 @@ import (
 )
 
 func DeepSeekHandler(w http.ResponseWriter, r *http.Request, cfg *config.Config) {
+	var resp models.UserResp
 	// 解析用户请求
 	var userReq models.UserRequest
 	if err := json.NewDecoder(r.Body).Decode(&userReq); err != nil {
@@ -21,12 +22,20 @@ func DeepSeekHandler(w http.ResponseWriter, r *http.Request, cfg *config.Config)
 	// 调用 DeepSeek 服务
 	deepseekResp, err := services.CallDeepSeekAPI(userReq.Prompt, cfg)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Error calling DeepSeek API: %v", err), http.StatusInternalServerError)
+		resp = models.UserResp{
+			Code:    400,
+			Content: err.Error(),
+		}
+		json.NewEncoder(w).Encode(resp)
+		// http.Error(w, fmt.Sprintf("Error calling DeepSeek API: %v", err), http.StatusInternalServerError)
 		return
 	}
-
+	resp = models.UserResp{
+		Code:    200,
+		Content: deepseekResp.Choices[0].Message.Content,
+	}
 	// 返回响应给用户
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(deepseekResp.Choices[0].Message.Content)
+	json.NewEncoder(w).Encode(resp)
 }
